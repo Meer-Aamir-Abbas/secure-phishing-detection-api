@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create .env
+        run: |
+          echo "API_KEY=testkey123" > .env
+
+      - name: Create sample training dataset
+        run: |
+          mkdir -p training
+          python - <<'PY'
+          import pandas as pd
+          data = [
+              {"text_combined": "Your account has been suspended. Verify immediately.", "label": 1},
+              {"text_combined": "Click here to reset your bank password now.", "label": 1},
+              {"text_combined": "Team meeting is scheduled for tomorrow.", "label": 0},
+              {"text_combined": "Please review the attached report.", "label": 0},
+              {"text_combined": "Urgent action required to unlock your email.", "label": 1},
+              {"text_combined": "Lunch with the team is at 1 PM.", "label": 0},
+          ]
+          pd.DataFrame(data).to_csv("training/phishing_email.csv", index=False)
+          PY
+
+      - name: Train model
+        run: |
+          mkdir -p model
+          python training/train_model.py
+
+      - name: Run tests
+        run: |
+          python -m pytest
