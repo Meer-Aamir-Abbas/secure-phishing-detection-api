@@ -152,27 +152,27 @@ Security Features
 ### Local FastAPI Server
 Shows the application running successfully in local development.
 
-![Local FastAPI Server](assets/local-fastapi-server.png)
+![Local FastAPI Server](/Users/aamir/Desktop/Projects/secure-phishing-detection-api/assets/local-fastapi-server.png)
 
 ### Phishing Prediction Result
 The deployed API classifies a realistic suspicious email as phishing.
 
-![Phishing Prediction](assets/phishing-prediction.png)
+![Phishing Prediction](/Users/aamir/Desktop/Projects/secure-phishing-detection-api/assets/phishing-prediction.png)
 
 ### Rate Limiting Protection
 Shows `429 Too Many Requests` after repeated calls within the configured limit.
 
-![Rate Limiting](assets/rate-limiting.png)
+![Rate Limiting](a/Users/aamir/Desktop/Projects/secure-phishing-detection-api/assets/rate-limiting.png)
 
 ### Automated Test Results
 Pytest output showing all tests passed successfully.
 
-![Pytest Passed](assets/pytest-passed.png)
+![Pytest Passed](/Users/aamir/Desktop/Projects/secure-phishing-detection-api/assets/pytest-passed.png)
 
 ### Render Live Deployment
 Shows the deployed service live on Render.
 
-![Render Live Deployment](assets/render-live-deployment.png)
+![Render Live Deployment](/Users/aamir/Desktop/Projects/secure-phishing-detection-api/assets/render-live-deployment.png)
 
 Local Setup
 
