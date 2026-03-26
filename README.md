@@ -87,7 +87,7 @@ secure-phishing-detection-api/
 │   └── test_api.py
 ├── training/
 │   ├── train_model.py
-│   └── phishing_email.csv   # excluded from GitHub due to file size
+│   └── phishing_email.csv
 ├── .dockerignore
 ├── .gitignore
 ├── Dockerfile
