@@ -92,8 +92,8 @@ secure-phishing-detection-api/
 ├── Dockerfile
 ├── README.md
 └── requirements.txt
-
-How It Works
+```
+## How It Works
 	1.	A user sends suspicious text to the /predict endpoint.
 	2.	The API validates and cleans the input.
 	3.	The trained model predicts whether the text is phishing or legitimate.
@@ -156,28 +156,32 @@ Security Features
 	•	Sensitive files excluded from Git tracking
 
 
-Screenshots
+### Screenshots
 
-Local FastAPI Server
+### Local FastAPI Server
 
 Shows the application running successfully in local development.
-assets/local-fastapi-server.png
+![Local FastAPI Server](assets/local-fastapi-server.png)
 
-Phishing Prediction Result
+### Phishing Prediction Result
 
 The deployed API classifies a realistic suspicious email as phishing.
+![Phishing Prediction](assets/phishing-prediction.png)
 
-Rate Limiting Protection
+### Rate Limiting Protection
 
 Shows 429 Too Many Requests after repeated calls within the configured limit.
+![Rate Limiting](assets/rate-limiting.png)
 
-Automated Test Results
+### Automated Test Results
 
 Pytest output showing all tests passed successfully.
+![Pytest Passed](assets/pytest-passed.png)
 
-Render Live Deployment
+### Render Live Deployment
 
 Shows the deployed service live on Render.
+![Render Live Deployment](assets/render-live-deployment.png)
 
 Local Setup
 
