@@ -192,7 +192,7 @@ Shows the deployed service live on Render.
 1. Clone the repository
 git clone
 ```json
- https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
+https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
 cd secure-phishing-detection-api
 ```
 
