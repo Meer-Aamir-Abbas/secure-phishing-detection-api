@@ -167,6 +167,8 @@ Phishing Prediction Result
 
 The deployed API classifies a realistic suspicious email as phishing.
 
+![Local FastAPI Server](assets/local-fastapi-server.png)
+
 Rate Limiting Protection
 
 Shows 429 Too Many Requests after repeated calls within the configured limit.
