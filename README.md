@@ -130,19 +130,21 @@ Checks whether the API is running.
   "status": "ok"
 }
 ```
-POST /predict
+## POST /predict
 
 Predicts whether the input text is phishing or legitimate.
 
-Required Header
+```json
 x-api-key: mysecret123
+```
+## Sample Request
 
-Sample Request
 {
   "text": "Dear Customer, We detected unusual activity on your bank account. Your access will be suspended within 24 hours unless you verify your identity immediately. Click the secure link below to confirm your details and restore access: http://secure-bank-verify-login.com"
 }
 
-Sample Response
+## Sample Response
+
 {
   "input_text": "Dear Customer, We detected unusual activity on your bank account. Your access will be suspended within 24 hours unless you verify your identity immediately. Click the secure link below to confirm your details and restore access: http://secure-bank-verify-login.com",
   "prediction": "phishing",
@@ -188,38 +190,58 @@ Shows the deployed service live on Render.
 ### Local Setup
 
 1. Clone the repository
-git clone https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
+git clone
+```json
+ https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
+ ```
+ ```json
 cd secure-phishing-detection-api
+```
 
 2. Create and activate a virtual environment
 
 Mac / Linux
+```json
 python3 -m venv venv
 source venv/bin/activate
+```
 
 Windows
+```json
 python -m venv venv
 venv\Scripts\activate
+```
 
 3. Install dependencies
+```json
 pip install -r requirements.txt
+```
 
 4. Create .env
+```json
 API_KEY=mysecret123
+```
 
 5. Run the API
+```json
 uvicorn app.main:app --reload
+```
 
 6. Open Swagger Docs
+```json
 http://127.0.0.1:8000/docs
+```
 
 ### Training the Model
 
 To retrain the model, place the dataset at:
+```json
 training/phishing_email.csv
-
+```
 Then run:
+```json
 python training/train_model.py
+```
 
 ### Dataset Note
 
@@ -232,7 +254,9 @@ To retrain the model:
 
 
 ### Running Tests
+```json
 python -m pytest
+```
 
 Current tests cover:
 	•	health endpoint
@@ -243,10 +267,14 @@ Current tests cover:
 
 ### Docker
 Build image
+```json
 docker build -t phishing-api .
+```
 
 ### Run container
+```json
 docker run -p 8000:8000 --env-file .env phishing-api
+```
 
 ### CI/CD
 
@@ -258,8 +286,9 @@ docker run -p 8000:8000 --env-file .env phishing-api
 	•	runs tests
 
 ### Workflow file:
-
+```json
 .github/workflows/ci.yml
+```
 
 ### Deployment
 
