@@ -161,13 +161,11 @@ Screenshots
 Local FastAPI Server
 
 Shows the application running successfully in local development.
-
+assets/local-fastapi-server.png
 
 Phishing Prediction Result
 
 The deployed API classifies a realistic suspicious email as phishing.
-
-![Local FastAPI Server](assets/local-fastapi-server.png)
 
 Rate Limiting Protection
 
