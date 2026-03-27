@@ -258,7 +258,7 @@ To retrain the model:
 python -m pytest
 ```
 
-Current tests cover:
+### Current tests cover:
 	•	health endpoint
 	•	successful prediction
 	•	missing API key
