@@ -193,8 +193,6 @@ Shows the deployed service live on Render.
 git clone
 ```json
  https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
- ```
- ```json
 cd secure-phishing-detection-api
 ```
 
