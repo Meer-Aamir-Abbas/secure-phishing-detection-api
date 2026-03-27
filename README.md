@@ -94,16 +94,17 @@ secure-phishing-detection-api/
 └── requirements.txt
 ```
 ## How It Works
-	1.	A user sends suspicious text to the /predict endpoint.
-	2.	The API validates and cleans the input.
-	3.	The trained model predicts whether the text is phishing or legitimate.
-	4.	The API returns:
-	•	input text
-	•	prediction
-	•	confidence score
-	5.	The endpoint is protected with API key authentication and rate limiting.
 
-Model Details
+1. A user sends suspicious text to the `/predict` endpoint.
+2. The API validates and cleans the input.
+3. The trained model predicts whether the text is phishing or legitimate.
+4. The API returns:
+   - input text
+   - prediction
+   - confidence score
+5. The endpoint is protected with API key authentication and rate limiting.
+
+## Model Details
 
 The model was trained using:
 	•	TF-IDF Vectorization
@@ -117,17 +118,18 @@ Saved model:
 
 model/phishing_model.pkl
 
-API Endpoints
+## API Endpoints
 
 GET /health
 
 Checks whether the API is running.
 
-Response
+**Response**
+```json
 {
   "status": "ok"
 }
-
+```
 POST /predict
 
 Predicts whether the input text is phishing or legitimate.
@@ -147,7 +149,7 @@ Sample Response
   "confidence": 0.9983
 }
 
-Security Features
+## Security Features
 	•	API key authentication
 	•	Rate limiting with SlowAPI
 	•	Input validation with Pydantic
