@@ -183,7 +183,7 @@ Pytest output showing all tests passed successfully.
 Shows the deployed service live on Render.
 ![Render Live Deployment](assets/render-live-deployment.png)
 
-Local Setup
+### Local Setup
 
 1. Clone the repository
 git clone https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
@@ -211,16 +211,15 @@ uvicorn app.main:app --reload
 6. Open Swagger Docs
 http://127.0.0.1:8000/docs
 
-Training the Model
+### Training the Model
 
 To retrain the model, place the dataset at:
-
 training/phishing_email.csv
 
 Then run:
 python training/train_model.py
 
-Dataset Note
+### Dataset Note
 
 The original training dataset is not included in the repository because it exceeds GitHub’s file size limit.
 
@@ -230,7 +229,7 @@ To retrain the model:
 	3.	run the training script
 
 
-Running Tests
+### Running Tests
 python -m pytest
 
 Current tests cover:
@@ -240,38 +239,37 @@ Current tests cover:
 	•	empty input validation
 
 
-Docker
-
+### Docker
 Build image
 docker build -t phishing-api .
 
-Run container
+### Run container
 docker run -p 8000:8000 --env-file .env phishing-api
 
-CI/CD
+### CI/CD
 
-GitHub Actions automatically:
+### GitHub Actions automatically:
 	•	installs dependencies
 	•	creates a sample .env
 	•	creates a sample training dataset
 	•	trains the model
 	•	runs tests
 
-Workflow file:
+### Workflow file:
 
 .github/workflows/ci.yml
 
-Deployment
+### Deployment
 
-This project is deployed on Render as a Docker-based web service.
+### This project is deployed on Render as a Docker-based web service.
 
-Deployment includes:
+### Deployment includes:
 	•	Dockerized application
 	•	environment variable configuration
 	•	health check endpoint
 	•	public Swagger documentation
 
-Future Improvements
+### Future Improvements
 	•	URL-based phishing detection
 	•	Suspicious indicator explanations
 	•	Transformer-based NLP model
@@ -280,10 +278,10 @@ Future Improvements
 	•	Stronger production observability
 
 
-Author
+### Author
 
-Meer Aamir Abbas
+### Meer Aamir Abbas
 
-License
+### License
 
 This project currently does not include a license.
