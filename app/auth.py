@@ -1,4 +1,5 @@
 import os
+import secrets
 from fastapi import Header, HTTPException
 from dotenv import load_dotenv
 
@@ -11,6 +12,15 @@ if not API_KEY:
         "in a .env file at the project root before starting the application."
     )
 
+def _api_keys_equal(provided: str, expected: str) -> bool:
+    try:
+        return secrets.compare_digest(
+            provided.encode("utf-8"),
+            expected.encode("utf-8"),
+        )
+    except (ValueError, TypeError, AttributeError, UnicodeEncodeError):
+        return False
+
 def verify_api_key(x_api_key: str = Header(...)):
-    if x_api_key != API_KEY:
+    if not _api_keys_equal(x_api_key, API_KEY):
         raise HTTPException(status_code=401, detail="Invalid or missing API key.")
