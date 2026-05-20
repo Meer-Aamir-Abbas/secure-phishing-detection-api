@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pandas as pd
 import joblib
 from sklearn.model_selection import train_test_split
@@ -41,5 +43,8 @@ y_pred = pipeline.predict(X_test)
 print(classification_report(y_test, y_pred))
 
 # Save model
-joblib.dump(pipeline, "model/phishing_model.pkl")
-print("Model saved successfully to model/phishing_model.pkl")
+project_root = Path(__file__).resolve().parent.parent
+model_path = project_root / "model" / "phishing_model.pkl"
+model_path.parent.mkdir(parents=True, exist_ok=True)
+joblib.dump(pipeline, model_path)
+print(f"Model saved successfully to {model_path}")
