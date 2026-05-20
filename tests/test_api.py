@@ -25,12 +25,20 @@ def test_predict_success():
     assert "confidence" in data
     assert data["prediction"] in ["phishing", "legitimate"]
 
+def test_predict_invalid_api_key():
+    response = client.post(
+        "/predict",
+        json={"text": "Your account has been suspended. Click here immediately to verify your details."},
+        headers={"x-api-key": "invalid-key"}
+    )
+    assert response.status_code == 401
+
 def test_predict_missing_api_key():
     response = client.post(
         "/predict",
         json={"text": "Your account has been suspended. Click here immediately to verify your details."}
     )
-    assert response.status_code in [401, 422]
+    assert response.status_code == 422
 
 def test_predict_empty_text():
     response = client.post(
@@ -39,3 +47,19 @@ def test_predict_empty_text():
         headers={"x-api-key": API_KEY}
     )
     assert response.status_code == 400
+
+def test_predict_whitespace_only_text():
+    response = client.post(
+        "/predict",
+        json={"text": "   \n\t   "},
+        headers={"x-api-key": API_KEY}
+    )
+    assert response.status_code == 400
+
+def test_predict_oversized_text():
+    response = client.post(
+        "/predict",
+        json={"text": "a" * 100_001},
+        headers={"x-api-key": API_KEY}
+    )
+    assert response.status_code == 422
