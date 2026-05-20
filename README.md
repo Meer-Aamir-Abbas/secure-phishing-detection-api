@@ -15,6 +15,8 @@ A secure AI-powered phishing detection API built with **FastAPI**, **scikit-lear
 - **Swagger Docs:** `https://secure-phishing-detection-api.onrender.com/docs`
 - **Health Check:** `https://secure-phishing-detection-api.onrender.com/health`
 
+> **Privacy warning (demo):** Do **not** paste real sensitive emails, credentials, or any PII into the public demo.
+
 ---
 
 ## Overview
@@ -107,20 +109,27 @@ secure-phishing-detection-api/
 ## Model Details
 
 The model was trained using:
-	•	TF-IDF Vectorization
-	•	Logistic Regression
+- TF-IDF Vectorization
+- Logistic Regression
 
 Training dataset columns:
-	•	text_combined
-	•	label
+- `text_combined`
+- `label`
 
 Saved model:
 
-model/phishing_model.pkl
+`model/phishing_model.pkl`
+
+### Local model requirement
+
+The API loads `model/phishing_model.pkl` at startup. **You must have this file locally before running** `uvicorn app.main:app --reload`.
+
+- If `model/phishing_model.pkl` is already present, you can run the API immediately after setting `API_KEY`.
+- If it is missing, train it locally (see [Training the Model](#training-the-model)) or use the same approach as CI (it generates a small CSV and trains a model before running tests).
 
 ## API Endpoints
 
-GET /health
+### GET `/health`
 
 Checks whether the API is running.
 
@@ -130,34 +139,48 @@ Checks whether the API is running.
   "status": "ok"
 }
 ```
-## POST /predict
+
+### POST `/predict`
 
 Predicts whether the input text is phishing or legitimate.
 
-```json
-x-api-key: mysecret123
-```
-## Sample Request
+**Headers**
 
+- `x-api-key`: your API key (required)
+
+**Request body**
+
+```json
 {
   "text": "Dear Customer, We detected unusual activity on your bank account. Your access will be suspended within 24 hours unless you verify your identity immediately. Click the secure link below to confirm your details and restore access: http://secure-bank-verify-login.com"
 }
+```
 
-## Sample Response
+**Sample response**
 
+```json
 {
   "input_text": "Dear Customer, We detected unusual activity on your bank account. Your access will be suspended within 24 hours unless you verify your identity immediately. Click the secure link below to confirm your details and restore access: http://secure-bank-verify-login.com",
   "prediction": "phishing",
   "confidence": 0.9983
 }
+```
+
+### Status codes
+
+- **200**: success
+- **400**: cleaned input is empty (e.g. empty or whitespace-only text)
+- **401**: invalid API key
+- **422**: request validation error (e.g. missing `x-api-key`, malformed JSON, or `text` too long)
+- **429**: rate limit exceeded
 
 ## Security Features
-	•	API key authentication
-	•	Rate limiting with SlowAPI
-	•	Input validation with Pydantic
-	•	Secret management using environment variables
-	•	Request and prediction logging
-	•	Sensitive files excluded from Git tracking
+- API key authentication
+- Rate limiting with SlowAPI
+- Input validation with Pydantic
+- Secret management using environment variables
+- Request and prediction logging
+- Sensitive files excluded from Git tracking
 
 
 ### Screenshots
@@ -190,54 +213,70 @@ Shows the deployed service live on Render.
 ### Local Setup
 
 1. Clone the repository
-git clone
-```json
-https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
+
+```bash
+git clone https://github.com/Meer-Aamir-Abbas/secure-phishing-detection-api.git
 cd secure-phishing-detection-api
 ```
 
 2. Create and activate a virtual environment
 
 Mac / Linux
-```json
+```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
 Windows
-```json
+```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
 3. Install dependencies
-```json
+```bash
 pip install -r requirements.txt
 ```
 
-4. Create .env
-```json
-API_KEY=mysecret123
+4. Create `.env` (required)
+
+Generate a strong API key:
+
+```bash
+openssl rand -hex 32
 ```
 
+Create a `.env` file at the project root:
+
+```bash
+API_KEY=your-generated-hex-key-here
+```
+
+> `API_KEY` is **required**. The app fails fast at startup if it is missing or empty.
+
 5. Run the API
-```json
+```bash
 uvicorn app.main:app --reload
 ```
 
 6. Open Swagger Docs
-```json
+```bash
 http://127.0.0.1:8000/docs
 ```
 
 ### Training the Model
 
-To retrain the model, place the dataset at:
-```json
+If you do not already have `model/phishing_model.pkl`, retrain the model.
+
+1. Place the dataset at:
+
+```bash
 training/phishing_email.csv
 ```
-Then run:
-```json
+
+2. Run:
+
+```bash
 python training/train_model.py
 ```
 
@@ -246,45 +285,47 @@ python training/train_model.py
 The original training dataset is not included in the repository because it exceeds GitHub’s file size limit.
 
 To retrain the model:
-	1.	download the phishing email dataset separately
-	2.	place it at training/phishing_email.csv
-	3.	run the training script
+- download the phishing email dataset separately
+- place it at `training/phishing_email.csv`
+- run `python training/train_model.py`
 
 
 ### Running Tests
-```json
+```bash
 python -m pytest
 ```
 
 ### Current tests cover:
-	•	health endpoint
-	•	successful prediction
-	•	missing API key
-	•	empty input validation
+- health endpoint
+- successful prediction
+- missing API key
+- empty/whitespace-only input validation
+- invalid API key
+- oversized input validation
 
 
 ### Docker
 Build image
-```json
+```bash
 docker build -t phishing-api .
 ```
 
 ### Run container
-```json
+```bash
 docker run -p 8000:8000 --env-file .env phishing-api
 ```
 
 ### CI/CD
 
 ### GitHub Actions automatically:
-	•	installs dependencies
-	•	creates a sample .env
-	•	creates a sample training dataset
-	•	trains the model
-	•	runs tests
+- installs dependencies
+- creates a sample `.env`
+- creates a sample training dataset
+- trains the model
+- runs tests
 
 ### Workflow file:
-```json
+```bash
 .github/workflows/ci.yml
 ```
 
@@ -293,18 +334,18 @@ docker run -p 8000:8000 --env-file .env phishing-api
 ### This project is deployed on Render as a Docker-based web service.
 
 ### Deployment includes:
-	•	Dockerized application
-	•	environment variable configuration
-	•	health check endpoint
-	•	public Swagger documentation
+- Dockerized application
+- environment variable configuration
+- health check endpoint
+- public Swagger documentation
 
 ### Future Improvements
-	•	URL-based phishing detection
-	•	Suspicious indicator explanations
-	•	Transformer-based NLP model
-	•	Persistent audit logging
-	•	Monitoring dashboard
-	•	Stronger production observability
+- URL-based phishing detection
+- Suspicious indicator explanations
+- Transformer-based NLP model
+- Persistent audit logging
+- Monitoring dashboard
+- Stronger production observability
 
 
 ### Author
